@@ -4,9 +4,10 @@ import { MiradorLdnPlugin } from '../../src'
 
 const config = {
   id: 'demo',
-  windows: [{
-    loadedManifest: 'https://purl.stanford.edu/sn904cj3429/iiif/manifest'
-  }],
+  manifests: {
+    'https://www.e-codices.unifr.ch/metadata/iiif/kba-WettF0015/manifest.json':{},
+    'http://iiif.biblissima.fr/gallica/btv1b10510321r/manifest.json':{}
+  },
   theme: {
     palette: {
       primary: {

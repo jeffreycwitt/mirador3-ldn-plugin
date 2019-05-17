@@ -16,18 +16,43 @@ class Notification extends Component {
   }
   handleRetrieve(){
     Axios.get(this.props.notification.object["@id"]).then((d) => {
-      console.log("new test", d)
-      this.setState({data: d.data.ranges});
-      const manifest = this.props.state.manifests[this.props.notification.target]
-      manifest.json.structures = d.data.ranges
-      console.log("props", this.props)
-      this.props.receiveManifest(this.props.notification.target, manifest)
+      if (this.props.notification.object["@type"] == "sc:Range"){
 
-    })
+        this.setState({data: d.data.ranges});
+        const manifest = this.props.state.manifests[this.props.notification.target]
+        manifest.json.structures = d.data.ranges
+
+        this.props.receiveManifest(this.props.notification.target, manifest)
+      }
+      else if (this.props.notification.object["@type"] == "sc:Layer"){
+
+        let listCanvasMap = {}
+        d.data.otherContent.forEach((i) => {
+          const url = i["sc:forCanvas"].replace('http', 'https')
+          listCanvasMap[url] = i["@id"]
+        })
+
+        const manifest = this.props.state.manifests[this.props.notification.target]
+        const canvases = manifest.json.sequences[0].canvases
+        const newCanvases = canvases.map((c) => {
+          const canvas = {
+            ...c,
+            otherContent: [{
+              "@id": listCanvasMap[c["@id"]],
+              "@type": "sc:AnnotationList"
+            }]
+          }
+          return canvas
+        });
+        manifest.json.sequences[0].canvases = newCanvases
+        this.props.receiveManifest(this.props.notification.target, manifest.json)
+      }
+
+    });
 
   }
   componentDidMount(){
-    console.log("Notifications have mounted")
+    
   }
   render(){
 

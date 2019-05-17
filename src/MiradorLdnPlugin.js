@@ -7,6 +7,7 @@ import ImportExport from '@material-ui/icons/ImportExport';
 import Axios from 'axios'
 import Notification from './Notification'
 import { receiveManifest } from 'mirador/dist/es/src/state/actions/manifest';
+import { removeInfoResponse } from 'mirador/dist/es/src/state/actions/infoResponse';
 
 
 
@@ -43,7 +44,7 @@ class MiradorLdnPlugin extends Component {
         console.log(n)
         return (
 
-          <Notification notification={n} key={n["@id"]} state={this.props.state} receiveManifest={this.props.receiveManifest}/>
+          <Notification notification={n} key={n["@id"]} state={this.props.state} receiveManifest={this.props.receiveManifest} removeInfoResponse={this.props.removeInfoResponse}/>
 
           )
       });
