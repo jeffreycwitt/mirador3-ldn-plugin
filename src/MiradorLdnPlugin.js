@@ -29,19 +29,19 @@ class MiradorLdnPlugin extends Component {
   }
   componentDidMount(){
     console.log("I have mounted")
-    //const inbox = "https://inbox.rerum.io/messages"
-    const inbox = "http://127.0.0.1:8080/test.json"
+    const inbox = "https://inbox.rerum.io/messages"
+    //const inbox = "http://127.0.0.1:8080/test.json"
     const focusedWindowId = this.props.state.workspace.focusedWindowId
     const focusedManifest = this.props.state.windows[focusedWindowId].manifestId
     Axios.get(inbox, {params: {target: focusedManifest}}).then((data) => {
-      console.log(data)
+      //console.log(data)
       this.setState({notifications: data.data.contains})
     });
   }
   render() {
     const displayNotifications = () => {
       const notificationsMap = this.state.notifications.map((n) => {
-        console.log(n)
+        //console.log(n)
         return (
 
           <Notification notification={n} key={n["@id"]} state={this.props.state} receiveManifest={this.props.receiveManifest} removeInfoResponse={this.props.removeInfoResponse}/>
@@ -58,6 +58,7 @@ class MiradorLdnPlugin extends Component {
       </IconButton>
       <Dialog open={this.state.showErrorDialog} onClose={this.handleButtonClick}>
           <DialogContent>
+          TEST
           {displayNotifications()}
           </DialogContent>
         </Dialog>

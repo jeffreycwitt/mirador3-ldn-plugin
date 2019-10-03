@@ -28,13 +28,17 @@ class Notification extends Component {
 
         let listCanvasMap = {}
         d.data.otherContent.forEach((i) => {
-          const url = i["sc:forCanvas"].replace('http', 'https')
+          const url = i["sc:forCanvas"].replace('http://', 'https://')
           listCanvasMap[url] = i["@id"]
         })
 
         const manifest = this.props.state.manifests[this.props.notification.target]
         const canvases = manifest.json.sequences[0].canvases
         const newCanvases = canvases.map((c) => {
+          console.log("canvas", c["@id"])
+          const canvasid = c["@id"]
+          console.log("listcanvasMap", listCanvasMap)
+          console.log("transcriptionid", listCanvasMap[canvasid])
           const canvas = {
             ...c,
             otherContent: [{
@@ -52,7 +56,7 @@ class Notification extends Component {
 
   }
   componentDidMount(){
-    
+
   }
   render(){
 
